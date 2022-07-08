@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=GDrive Sync
+Comment=Sync Files to Google Drive using Rclone
+Exec=/usr/local/bin/gupload.sh
+Icon=/opt/gupload.png
+Terminal=true
+Type=Application
