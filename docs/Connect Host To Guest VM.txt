@@ -1,0 +1,43 @@
+1. First, we need to add and save the following XML in the /tmp/isolated.xml file. If the 192.168.254.0/24 network is already in use elsewhere on our network, we can choose a different network.
+
+...
+<network>
+<name>isolated</name>
+<ip address='192.168.254.1' netmask='255.255.255.0'>
+<dhcp>
+<range start='192.168.254.2' end='192.168.254.254'/>
+<host mac='52:54:00:56:1e:09'name='BSPWM'ip='192.168.254.2'/>
+</dhcp>
+</ip>
+</network>
+...
+
+# Note: Change mac address, VM name and Static IP address to your requirement
+
+2.  Then create the network with the following command:
+
+virsh net-define /tmp/isolated.xml
+
+3. After that, we need to set the network to autostart with the following command:
+
+virsh net-autostart isolated
+
+4. And start the network with the following command:
+
+virsh net-start isolated
+
+5. Now, edit the configuration of each guest that uses macvtap for its network connection using the following command:
+
+virsh edit name_of_guest
+
+Add a new <interface> in the <devices> section similar to the following (note the <model type=’virtio’/> line is optional to include):
+
+...
+<interface type='network' trustGuestRxFilters='yes'>
+<source network='isolated'/>
+<model type='virtio'/>
+</interface>
+
+6. Finally, shut down, then restart each of these guests.
+
+Since this new network is isolated to only the host and guests, all other communication from the guests will use the macvtap interface.
