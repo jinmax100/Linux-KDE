@@ -32,6 +32,7 @@ find /home/jeevan/Vault -type f -exec chmod 644 {} \;   # For files
 ---------------------------------------------------------------------------------
 -		Update Arch-Linux Keyring					-	
 ---------------------------------------------------------------------------------
+
 sudo pacman -Sy archlinux-keyring && sudo pacman -Su
 
 ---------------------------------------------------------------------------------
@@ -52,6 +53,8 @@ sudo loop -o path_to_iso path_to_mount_dir
 -			Rsync Drive Copy Command				-		
 ---------------------------------------------------------------------------------
 
-rsync -axHAWXS --numeric-ids --info=progress2
+rsync -axHAWXS --numeric-ids --info=progress2 /source /destination/
+
+# Remember there is no '/' after /source
 
 ---------------------------------------------------------------------------------
